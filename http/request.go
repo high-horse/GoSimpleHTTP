@@ -33,8 +33,10 @@ func parseRequest(conn net.Conn) (*Request, error) {
 	}, nil
 }
 
-func HandleConnection(conn net.Conn) {
+// HandleConnection processes the incoming connection and sends a response
+func  (s *Server) HandleConnection(conn net.Conn) {
 	defer conn.Close()
+	
 	request, err := parseRequest(conn)
 	if err != nil {
 		log.Println("Error Parsing Request,", err)
@@ -43,11 +45,22 @@ func HandleConnection(conn net.Conn) {
 	
 	log.Printf("Request recieved: %s\t%s\t%s", request.Method, request.Path, request.Proto)
 	
-	response := "HTTP/1.1 200 OK\r\n" +	
-				"Content-Type: text/plain\r\n" +
-				"Content-Length: 12\r\n" +
-				"\r\n" +
-				"Hello, World!"
-				
-	conn.Write([]byte(response))
+	// Get the handler for the request path
+	handler, found := s.handlers[request.Path]
+	if !found {
+		handler = func(request *Request) *Response {
+			return NewTextResponse(4040, "NOT FOUND")
+		}
+	}
+	
+	// Generate the response using the handler
+	responose := handler(request)
+	if responose == nil {
+		responose = NewTextResponse(500, "INTERNAL SERVER ERROR")
+	}
+	
+	_, err = conn.Write([]byte(responose.ToString()))
+	if err != nil {
+		log.Println("Error sending Response:", err)
+	}
 }
