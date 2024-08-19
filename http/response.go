@@ -45,16 +45,3 @@ func (r *Response) ToString() string {
 	
 	return fmt.Sprintf("%s\r\n%s\r\n\r\n%s", r.Status, strings.Join(headers, "\r\n"), r.Body)
 }
-
-func statusText(code int) string {
-	switch code {
-	case 200:
-		return "OK"
-	case 404:
-		return "Not Found"
-	case 500:
-		return "Internal Server Error"
-	default:
-		return "Unknown Status"
-	}
-}
