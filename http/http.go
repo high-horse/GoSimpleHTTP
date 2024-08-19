@@ -41,7 +41,7 @@ func HandleConnection(conn net.Conn) {
 		return
 	}
 	
-	log.Printf("Request recieved: %s\t%s\t%s\n", request.Method, request.Path, request.Proto)
+	log.Printf("Request recieved: %s\t%s\t%s", request.Method, request.Path, request.Proto)
 	
 	response := "HTTP/1.1 200 OK\r\n" +	
 				"Content-Type: text/plain\r\n" +
