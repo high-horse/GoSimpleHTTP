@@ -1,0 +1,42 @@
+# Build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+*.a
+*.o
+*.d
+
+# Dependency directories
+/vendor/
+.Gopkg.lock
+.Gopkg.toml
+/go.sum
+/go.mod
+
+# IDE and editor-specific files
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+*.vscode/
+.idea/
+*.iml
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+
+# Coverage reports
+*.cover
+coverage.out
